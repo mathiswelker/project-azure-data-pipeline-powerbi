@@ -1,39 +1,32 @@
-import pandas as pd
-import random
-import os
 from faker import Faker
-from datetime import datetime, timedelta
+import random
+from datetime import date, timedelta
 
-# Init Faker (für Fake-Namen und Adressen)
-fake = Faker()
+fake = Faker('de_DE') 
 
-# Set output directory
-OUTPUT_DIR = os.path.join("data")
-os.makedirs(OUTPUT_DIR, exist_ok=True)
-
+# ---- Kunden ----
 customers = []
 for i in range(1, 51):
     customers.append({
         "customer_id": i,
         "name": fake.name(),
         "email": fake.email(),
-        "address": fake.address()
+        "address": fake.address(),
+        "country": "Deutschland",
+        "phone": fake.phone_number(),
+        "company": fake.company()
     })
-df_customers = pd.DataFrame(customers)
-df_customers.to_csv(os.path.join(OUTPUT_DIR, "customers.csv"), index=False)
 
-
-# ---- Products ----
+# ---- Produkte ----
 products = []
-for i in range(1, 11):
+for i in range(1, 11): 
     products.append({
         "product_id": i,
-        "name": f"Product {i}",
-        "category": random.choice(["Electronics", "Books", "Clothing", "Food"]),
-        "price": round(random.uniform(5, 200), 2)
+        "name": f"Produkt {i}",
+        "category": random.choice(["Elektronik", "Bücher", "Kleidung", "Lebensmittel"]),
+        "price": round(random.uniform(5, 200), 2),
+        "description": fake.text(max_nb_chars=100)
     })
-df_products = pd.DataFrame(products)
-df_products.to_csv(os.path.join(OUTPUT_DIR, "products.csv"), index=False)
 
 # ---- Orders ----
 orders = []
@@ -41,19 +34,17 @@ for i in range(1, 501):
     customer_id = random.randint(1, 50)
     product_id = random.randint(1, 10)
     quantity = random.randint(1, 5)
-    price = df_products.loc[df_products["product_id"] == product_id, "price"].values[0]
-    total = round(price * quantity, 2)
-    order_date = datetime.now() - timedelta(days=random.randint(0, 180))
+    price = products[product_id-1]["price"]
 
     orders.append({
         "order_id": i,
         "customer_id": customer_id,
         "product_id": product_id,
         "quantity": quantity,
-        "total_amount": total,
-        "order_date": order_date.strftime("%Y-%m-%d")
+        "total_amount": round(price * quantity, 2),
+        "order_date": date.today() - timedelta(days=random.randint(0, 180))
     })
-df_orders = pd.DataFrame(orders)
-df_orders.to_csv(os.path.join(OUTPUT_DIR, "orders.csv"), index=False)
 
-print("✅ Dummy data generated in /data folder")
+print("✅ Kunden, Produkte und Orders generiert")
+
+
