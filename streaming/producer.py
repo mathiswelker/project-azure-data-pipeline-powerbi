@@ -4,9 +4,9 @@ import time
 import random
 from datetime import datetime
 
-# Producer mit JSON-Serializer
+# Producer Definition
 producer = KafkaProducer(
-    bootstrap_servers="localhost:9092",  # Kafka läuft im Docker
+    bootstrap_servers="localhost:9092",
     value_serializer=lambda v: json.dumps(v).encode("utf-8")
 )
 
@@ -18,7 +18,7 @@ products = [
     {"product_id": 4, "name": "Headphones", "price": 80}
 ]
 
-print("🚀 Producer gestartet. Sende Orders an Kafka...")
+print("Producer gestartet ...")
 
 try:
     while True:
@@ -32,10 +32,9 @@ try:
             "order_date": datetime.now().isoformat()
         }
 
-        # Nachricht ins Topic "orders"
         producer.send("orders", value=order)
         print(f"✅ Neue Order gesendet: {order}")
 
-        time.sleep(3)  # alle 3 Sekunden eine Order
+        time.sleep(3)
 except KeyboardInterrupt:
     print("🛑 Producer gestoppt.")

@@ -2,9 +2,7 @@ from kafka import KafkaConsumer
 import psycopg2
 import json
 
-# -------------------
 # Kafka Consumer Setup
-# -------------------
 consumer = KafkaConsumer(
     "orders",
     bootstrap_servers=["localhost:9092"],
@@ -14,11 +12,9 @@ consumer = KafkaConsumer(
     value_deserializer=lambda v: json.loads(v.decode("utf-8"))
 )
 
-print("🚀 Kafka Consumer gestartet. Warte auf neue Orders...")
+print("Consumer gestartet ...")
 
-# -------------------
-# PostgreSQL Verbindung
-# -------------------
+# postgreSQL Verbindung
 conn = psycopg2.connect(
     host="localhost",
     database="postgres",
@@ -27,9 +23,7 @@ conn = psycopg2.connect(
 )
 cursor = conn.cursor()
 
-# -------------------
 # Nachrichten verarbeiten
-# -------------------
 for message in consumer:
     order = message.value
     print(f"Neue Nachricht: {order}")
