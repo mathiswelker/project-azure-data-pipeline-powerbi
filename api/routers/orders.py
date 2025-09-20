@@ -1,8 +1,8 @@
 from fastapi import APIRouter
-from services.fake_data import generate_order
+from services.fake_data import orders  # nur die Liste
 
 router = APIRouter(prefix="/orders", tags=["orders"])
 
-@router.get("/{order_id}")
-def get_order(order_id: int):
-    return generate_order(order_id)
+@router.get("/")
+def get_all_orders():
+    return orders  # liefert die gesamte Kundenliste

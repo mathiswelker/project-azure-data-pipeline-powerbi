@@ -1,8 +1,8 @@
 from fastapi import APIRouter
-from services.fake_data import generate_customer
+from services.fake_data import customers
 
 router = APIRouter(prefix="/customers", tags=["customers"])
 
-@router.get("/{customer_id}")
-def get_customer(customer_id: int):
-    return generate_customer(customer_id)
+@router.get("/")
+def get_all_customers():
+    return customers
