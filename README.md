@@ -1,3 +1,6 @@
-# Data pipeline and visualization project
+# Data pipeline mit Kafka, PostgreSQL und PowerBI
 
-structure: data ingestion into azure, data transformation using SQL, visualization using powerBI
+Das Projekt simuliert eine Datenpipeline eines einfachen Onlineshops. 
+Es werden Batch-Beispieldaten von einer API per python-Skript und Streaming-Beispieldaten über Kafka in eine PostgreSQL Datenbank transportiert und dann in PowerBI visualisiert.
+
+Für Kafka- und PostgreSQL-Instanzen wurden Docker-Container verwendet.
