@@ -17,9 +17,11 @@ df_orders    = pd.DataFrame(orders)
 
 
 engine = create_engine('postgresql+psycopg2://postgres:admin@localhost:5432/postgres')
+try:
+    df_customers.to_sql('customers', engine, if_exists='append', index=False)
+    df_products.to_sql('products', engine, if_exists='append', index=False)
+    df_orders.to_sql('orders', engine, if_exists='append', index=False)
+except Exception as e:
+    print(f"failed to import api-data into postgres {e}")
 
-df_customers.to_sql('customers', engine, if_exists='replace', index=False)
-df_products.to_sql('products', engine, if_exists='replace', index=False)
-df_orders.to_sql('orders', engine, if_exists='replace', index=False)
-
-print("✅ All API data loaded into Postgres!")
+print("data imported to postgres")
