@@ -1,5 +1,5 @@
 from fastapi import FastAPI
-from routers import customers, products, orders
+from app.routers import customers, products, orders
 
 app = FastAPI(title="Fake Shop API")
 

@@ -5,9 +5,10 @@ import random
 from datetime import datetime
 import uuid
 
+time.sleep(10)
 # Producer Initialisierung
 producer = KafkaProducer(
-    bootstrap_servers="localhost:9092",
+    bootstrap_servers=["kafka:9092"],
     value_serializer=lambda v: json.dumps(v).encode("utf-8")
 )
 
@@ -36,13 +37,13 @@ try:
             "customer_id": random.randint(1, 50),
             "product_id": product["product_id"],
             "quantity": quantity,
-            "total_amount": round(product["price"] * quantity, 2),
+            "price": product["price"],
             "order_date": datetime.now().isoformat()
         }
 
         producer.send("orders", value=order)
         print(f" new order arrived: {order}")
 
-        time.sleep(3)
+        time.sleep(random.uniform(3, 5))  # zufällige Pause zwischen 3 und 5 Sekunden
 except KeyboardInterrupt:
     print("producer stopped.")

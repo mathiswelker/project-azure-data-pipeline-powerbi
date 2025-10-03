@@ -1,5 +1,5 @@
 from fastapi import APIRouter
-from services.fake_data import orders  # nur die Liste
+from app.services.fake_data import orders  # nur die Liste
 
 router = APIRouter(prefix="/orders", tags=["orders"])
 

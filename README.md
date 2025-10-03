@@ -1,8 +1,31 @@
-# Data pipeline mit Kafka, PostgreSQL und PowerBI
+# Pipeline Project: API, PostgreSQL, Spark, Docker
 
-Das Projekt simuliert eine Datenpipeline eines einfachen Onlineshops. 
-Es werden Batch-Beispieldaten von einer API per python-Skript und Streaming-Beispieldaten über Kafka in eine PostgreSQL Datenbank transportiert und dann in PowerBI visualisiert.
+## Overview
+This project builds a pipeline with:
+- A Flask API (Python)
+- PostgreSQL database
+- Spark transformation job
+- All components are dockerized and orchestrated with Docker Compose
 
-Für Kafka- und PostgreSQL-Instanzen wurden Docker-Container verwendet. Ein Airflow DAG orchestriert die Dateningestion.
+## Structure
+- `api/` - Flask API service
+- `postgres/` - Database init script
+- `spark/` - Spark transformation job
+- `docker/` - Docker Compose file
 
-Unit-Tests und Linting wurden mithilfe von pytest in GitHub Actions umgesetzt um Continuous Integration sicherzustellen.
+## Usage
+1. Build and start all services:
+   ```powershell
+   cd docker
+   docker-compose up --build
+   ```
+2. The API runs on port 5000, PostgreSQL on 5432.
+3. Spark job connects to PostgreSQL and transforms data.
+
+## Customization
+- Replace example data and transformation logic as needed.
+- Update Dockerfiles for additional dependencies.
+
+## Notes
+- Default credentials: user `postgres`, password `postgres`, db `postgres`.
+- All code is for demonstration. Secure and optimize for production use.
