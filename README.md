@@ -1,31 +1,12 @@
-# Pipeline Project: API, PostgreSQL, Spark, Docker
+# Data pipeline mit Spark, PostgreSQL und PowerBI
 
-## Overview
-This project builds a pipeline with:
-- A Flask API (Python)
-- PostgreSQL database
-- Spark transformation job
-- All components are dockerized and orchestrated with Docker Compose
+Dieses Projekt lädt Kundendaten per API, speichert sie in einer Postgres-Datenbank, verarbeitet sie mit Spark und bereitet sie für PowerBI-Analysen vor – alles in Docker-Containern organisiert.
 
-## Structure
-- `api/` - Flask API service
-- `postgres/` - Database init script
-- `spark/` - Spark transformation job
-- `docker/` - Docker Compose file
+Komponenten:
+API: Stellt Endpunkte für Kunden, Produkte und Bestellungen bereit.
+Postgres: Speichert die Rohdaten und die verarbeiteten Daten.
+Spark: Liest Kundendaten aus Postgres, extrahiert Postleitzahlen, ergänzt Bundesland-Infos und schreibt die Ergebnisse zurück in die Datenbank.
 
-## Usage
-1. Build and start all services:
-   ```powershell
-   cd docker
-   docker-compose up --build
-   ```
-2. The API runs on port 5000, PostgreSQL on 5432.
-3. Spark job connects to PostgreSQL and transforms data.
-
-## Customization
-- Replace example data and transformation logic as needed.
-- Update Dockerfiles for additional dependencies.
-
-## Notes
-- Default credentials: user `postgres`, password `postgres`, db `postgres`.
-- All code is for demonstration. Secure and optimize for production use.
+Todo:
+Streaming Daten mit kafka und spark implementieren,
+CI mit pytest und GitHub Actions implementieren.
